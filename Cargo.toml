@@ -1,0 +1,9 @@
+[package]
+name = "changen"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+git2 = "0.20.2"
+# peeking-iter = "0.2.0"
+peeking-iter = { path = "../peeking-iter" }
