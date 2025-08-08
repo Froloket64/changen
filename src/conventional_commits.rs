@@ -87,11 +87,11 @@ impl MsgDesc {
     pub fn scope(&self) -> Option<&str> {
         self.conv_scope.as_deref()
     }
-    
+
     pub fn is_breaking(&self) -> bool {
         self.is_breaking
     }
-    
+
     pub fn is_conventional(&self) -> bool {
         self.tag().is_some()
     }
@@ -199,8 +199,8 @@ fn parse_conventional_sep<I: Iterator<Item = char> + Clone>(
 
 #[cfg(test)]
 mod tests {
-    use super::parse_commit_msg;
     use super::MsgDesc;
+    use super::parse_commit_msg;
 
     #[test]
     pub(crate) fn message_parsing() {
@@ -225,15 +225,27 @@ mod tests {
                 .with_tag_scope("feat".into(), "design".into())
                 .breaking()
         );
-        assert_eq!(parse_commit_msg("feat(): lorem ipsum"), MsgDesc::just_msg("lorem ipsum".into()).with_tag("feat".into()));
+        assert_eq!(
+            parse_commit_msg("feat(): lorem ipsum"),
+            MsgDesc::just_msg("lorem ipsum".into()).with_tag("feat".into())
+        );
 
         // Negative
         assert_eq!(
             parse_commit_msg("lorem ipsum"),
             MsgDesc::just_msg("lorem ipsum".into())
         );
-        assert_eq!(parse_commit_msg("lorem ipsum:"), MsgDesc::just_msg("lorem ipsum:".into()));
-        assert_eq!(parse_commit_msg("feat:lorem ipsum"), MsgDesc::just_msg("feat:lorem ipsum".into()));
-        assert_eq!(parse_commit_msg("():lorem ipsum"), MsgDesc::just_msg("():lorem ipsum".into()));
+        assert_eq!(
+            parse_commit_msg("lorem ipsum:"),
+            MsgDesc::just_msg("lorem ipsum:".into())
+        );
+        assert_eq!(
+            parse_commit_msg("feat:lorem ipsum"),
+            MsgDesc::just_msg("feat:lorem ipsum".into())
+        );
+        assert_eq!(
+            parse_commit_msg("():lorem ipsum"),
+            MsgDesc::just_msg("():lorem ipsum".into())
+        );
     }
 }
