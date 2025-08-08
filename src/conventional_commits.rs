@@ -1,4 +1,40 @@
+use git2::Oid;
 use peeking_iter::peeking::*;
+
+pub struct CommitDesc {
+    oid: Oid,
+    msg: MsgDesc,
+    author: Option<String>,
+}
+
+impl CommitDesc {
+    pub fn new(oid: Oid, msg: MsgDesc) -> Self {
+        Self {
+            oid,
+            msg,
+            author: None,
+        }
+    }
+
+    pub fn with_author(self, author: String) -> Self {
+        Self {
+            author: Some(author),
+            ..self
+        }
+    }
+
+    pub fn id(&self) -> Oid {
+        self.oid
+    }
+
+    pub fn message(&self) -> &MsgDesc {
+        &self.msg
+    }
+
+    pub fn author(&self) -> Option<&str> {
+        self.author.as_deref()
+    }
+}
 
 #[derive(Debug, PartialEq)]
 pub struct MsgDesc {
