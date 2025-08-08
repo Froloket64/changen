@@ -1,5 +1,6 @@
 use git2::{Commit, Oid, Repository, Revwalk};
 
+use std::env;
 use std::fs::{self, File};
 use std::io::{self, Write};
 
@@ -106,7 +107,12 @@ impl<'r> MdFormatter<'r> {
 // NOTE: Question-mark comments show where I'm confused about returned type
 // safety (why is there a `Result`, can it be safely `.unwrap`ped, etc.)
 fn main() -> io::Result<()> {
-    let filename = "test.md";
+    let filename = env::args().skip(1).next().unwrap_or_else(|| {
+        println!("warning: not output file was specified, using `CHANGELOG.md`");
+
+        "CHANGELOG.md".into()
+    });
+
     // HACK?
     let mut file = fs::File::create(filename)?;
 
