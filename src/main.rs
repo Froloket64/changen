@@ -38,6 +38,9 @@ fn main() -> io::Result<()> {
 
     fmt.start_changelog()?;
 
+    // HACK?
+    let mut rc = Ok(());
+
     commit_descriptions.into_iter().for_each(|commit| {
         match tagged_commits.last() {
             Some((tag_name, tagged_commit)) if tagged_commit.id() == commit.id() => {
@@ -48,9 +51,10 @@ fn main() -> io::Result<()> {
             _ => (),
         }
 
-        // TODO: Error
-        fmt.write_commit(&commit);
+        fmt.write_commit(&commit).err().map(|e| rc = Err(e));
     });
+
+    rc?;
 
     Ok(())
 }
