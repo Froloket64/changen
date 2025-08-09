@@ -80,7 +80,12 @@ impl<'r> MdFormatter<'r> {
         // HACK: Remote
         let hash_url = {
             let remote = self.repo.find_remote(&self.config.remote).unwrap();
-            let url = remote.url().unwrap().strip_suffix(".git").unwrap();
+            let url = remote.url().unwrap();
+            // HACK? idk man
+            let url = match url.strip_suffix(".git") {
+                None => url,
+                Some(x) => x,
+            };
 
             format!("{}/commit/{}", url, commit.id())
         };
