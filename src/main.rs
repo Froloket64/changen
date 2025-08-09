@@ -20,16 +20,8 @@ fn main() -> io::Result<()> {
     });
 
     // HACK?
+    let repo = Repository::open(".").expect("failed to find repository");
     let mut file = fs::File::create(filename)?;
-
-    let repo = match Repository::open(".") {
-        Ok(x) => x,
-        Err(e) => {
-            println!("error: failed to find repository");
-            return Ok(());
-        }
-    };
-
     let mut fmt = MdFormatter::new(&mut file, &repo);
 
     let head = repo.head().expect("failed to determine HEAD");
