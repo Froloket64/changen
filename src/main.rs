@@ -83,7 +83,11 @@ fn commit_descriptions(commits: Revwalk, repo: &Repository) -> Vec<CommitDesc> {
     commits.for_each(|oid| {
         let commit_oid = oid.unwrap(); // safe?
         let commit = repo.find_commit(commit_oid).unwrap(); // safe?
-        let msg_raw = commit.message().unwrap(); // safe?
+        // turns out this fails sometimes :(
+        let msg_raw = match commit.message() {
+            Some(x) => x,
+            None => return,
+        };
 
         let msg = parse_commit_msg(msg_raw);
         let commit_desc = CommitDesc::new(commit_oid, msg);
