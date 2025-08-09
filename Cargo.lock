@@ -276,6 +276,8 @@ dependencies = [
 [[package]]
 name = "peeking-iter"
 version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "61e18a5fab7944a728afbf238434c141eccec1cb72e68f01e319fbda2561816d"
 
 [[package]]
 name = "percent-encoding"
