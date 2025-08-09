@@ -6,7 +6,7 @@ _Making changelog generation as simple as possible._
 ## Installation
 ### Using crates.io
 ```sh
-cargo install changen
+cargo install changenn
 ```
 
 ### From source
